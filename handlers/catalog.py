@@ -1,56 +1,36 @@
 from aiogram import F, Router, types
 
 from keyboards.catalog import BookCBData, CategoryCBData, genarate_catalog_kb, generate_books_kb
+from repositories.categories import CategoryRepo
 
 router = Router()
 
 
-CATALOG = {
-    "Romans": 
-    {"text": "Romans", 
-     "description":"Book romans",
-     "books" : [ {
-         "id" : 1,
-         "name" : "Книга {}",
-         "description" : "Описание книги {}",
-         "price" : 100
-     },
-     {
-         "id" : 2,
-         "name" : "Книга {}",
-         "description" : "Описание книги {}",
-         "price" : 200
-     }
-     ]},
-    "Fantasy": {"text": "Fantasy", "description":"Book fantasy"},
-    "Horror": {"text": "Horror", "description":"Book horror "},
-    "Detectives": {"text": "Detectives", "description":"Book detectives"},
-    "Documentaries": {"text": "Documentaries", "description":"Book documentaries"},
-}
 
 
 @router.callback_query(F.data == "catalog")
 @router.message(F.text == "Catalog")
-async def catalog(update: types.Message | types.CallbackQuery):
+async def catalog(update: types.Message | types.CallbackQuery, category_repo: CategoryRepo):
+    categories = await category_repo.get_list()
     
     if isinstance(update, types.Message):
         await update.answer(
             "Our catalog:",
-            reply_markup=generate_books_kb(CATALOG)
+            reply_markup=generate_books_kb(categories)
         )
     else:
         await update.message.edit_text(
             "Our catalog:",
-            reply_markup=generate_books_kb(CATALOG)
+            reply_markup=generate_books_kb(categories)
         )
 
 
 @router.callback_query(CategoryCBData.filter())
-async def category_info(callback: types.CallbackQuery, callback_data: CategoryCBData):
-    category = CATALOG.get(callback_data.category)
+async def category_info(callback: types.CallbackQuery, callback_data: CategoryCBData, category_repo: CategoryRepo):
+    category = await category_repo.get_by_id(callback_data.category_id)
 
     await callback.message.edit_text(
-        text=category["description"],
+        text=category.description,
         reply_markup=generate_books_kb(
             category["books"], 
             callback_data.category

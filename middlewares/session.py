@@ -3,6 +3,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message
 
 from repositories.user import UserRepo
+from tg_bot.repositories.categories import CategoriesRepo
 
 
 class DatabaseSessionMiddleware(BaseMiddleware):
@@ -17,4 +18,5 @@ class DatabaseSessionMiddleware(BaseMiddleware):
     ) -> Any:
         async with self.session_maker() as session:
             data["user_repo"] =  UserRepo(session=session)
+            data["categories_repo"] = CategoriesRepo(session=session)
             return await handler    (event, data)
