@@ -8,18 +8,18 @@ class CategoryCBData(CallbackData, prefix="category"):
 
 class BookCBData(CallbackData, prefix="book"):
     id: int
-    category: str
+    category_id: int
 
 
-def genarate_catalog_kb(catalog):
+def genarate_catalog_kb(categories):
     Keyboard = InlineKeyboardMarkup(inline_keyboard=[])
     
-    for category_cb, category in catalog.items():
+    for category in categories:
         Keyboard.inline_keyboard.append(
             [
                 InlineKeyboardButton(
-                    text=category["text"],
-                    callback_data=CategoryCBData(category=category_cb).pack()
+                    text=category.name,
+                    callback_data=CategoryCBData(category_id=category.id).pack()
                 )
             ]
         )

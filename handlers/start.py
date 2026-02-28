@@ -9,7 +9,11 @@ router = Router()
 
 @router.message(Command("start"))
 async def start_bot(message: types.Message, user_repo:  UserRepo):
-    await user_repo.
+    await user_repo.create_or_update_user(
+        message.from_user.id, 
+        message.from_user.full_name, 
+        message.from_user.username
+    )
     await message.answer(
         f"Hi, {message.from_user.full_name}!n\I am bookstore, select the desired menu below:",
         reply_markup=main_menu_kb()
