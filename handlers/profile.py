@@ -19,8 +19,8 @@ async def user_profile_info(
     await message.answer(
         f"<b>{message.from_user.full_name}</b>\n\n"
         f"Username - {user.username}\n" if user.username else ""
-        f"ID - <code>{user.tg.id}</code>\n"
-        f"your balance - {user.balance} coins",
+        f"ID - <code>{user.tg_id}</code>\n"
+        f"your balance - {user.view_balance} coins",
         parse_mode=ParseMode.HTML,
         reply_markup=profile_kb.profile_menu()
     )
