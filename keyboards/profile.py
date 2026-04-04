@@ -20,3 +20,18 @@ def cancel_deposit_action():
             )
         ]
     ])
+
+
+def apply_deposit_action():
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(
+                text="Yes", 
+                callbeck_data="apply_deposit"
+            ),
+            InlineKeyboardButton(
+                text="No", 
+                callbeck_data="cancel_deposit"
+            )
+        ]
+    ])
