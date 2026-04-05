@@ -16,12 +16,17 @@ class UserRepo:
         user = await self.get_user_by_tg_id(tg_id)
 
         if not user:
-            await self.get_user_(tg_id, fullname, username)
+            await self.create_user(tg_id=tg_id, fullname=fullname, username=username)
         else:
             user.fullname = fullname
             user.username = username
 
         await self.__session.commit()
-        async def get_user(self, tg_id: int, fullname: str, username: str):
-            user = User(tg_id = tg_id, username = username, fullname = fullname)
-            self.__session.add(user)
+
+    async def get_user(self, tg_id: int, fullname: str, username: str):
+        user = User(tg_id = tg_id, username = username, fullname = fullname)
+        self.__session.add(user)
+
+    async def create_user(self, tg_id: int, fullname: str, username: str):
+        user = User(tg_id=tg_id, username=username, fullname=fullname)
+        self.__session.add(user)

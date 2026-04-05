@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 class CategoryCBData(CallbackData, prefix="category"):
-    category: str
+    category_id: int
 
 
 class BookCBData(CallbackData, prefix="book"):

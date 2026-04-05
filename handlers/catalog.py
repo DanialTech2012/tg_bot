@@ -17,12 +17,12 @@ async def catalog(update: types.Message | types.CallbackQuery, category_repo: Ca
     if isinstance(update, types.Message):
         await update.answer(
             "Our catalog:",
-            reply_markup=generate_books_kb(categories)
+            reply_markup=genarate_catalog_kb(categories)
         )
     else:
         await update.message.edit_text(
             "Our catalog:",
-            reply_markup=generate_books_kb(categories)
+            reply_markup=genarate_catalog_kb(categories)
         )
 
 
@@ -35,9 +35,8 @@ async def category_info(
 ):
     category = await category_repo.get_by_id(callback_data.category_id)
     books = await book_repo.get_books_category_id(callback_data.category_id)
-
     await callback.message.edit_text(
-        text=category.description,
+        text=category.discription,
         reply_markup=generate_books_kb(books)
     )
 
@@ -48,7 +47,7 @@ async def book_info(callback: types.CallbackQuery, callback_data: BookCBData, bo
     
     await callback.message.edit_text(
         f"Name - {book.name.format(book.id)}\n"
-        f"Description - {book.description.format(book.id)}\n"
+        f"Description - {book.discription.format(book.id)}\n"
         f"Price - {book.price}\n\n"
         "Want to buy?",
         reply_markup=back_to_category_books(book.id, book.category_id)

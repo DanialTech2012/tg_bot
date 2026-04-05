@@ -9,6 +9,6 @@ class Book(BaseModel):
        
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str]
-    iscription: Mapped[str]
+    discription: Mapped[str]
     price: Mapped[int]
     category_id: Mapped[int] = mapped_column(ForeignKey("categories.id"))

@@ -17,7 +17,7 @@ async def user_profile_info(
 ):
     user  = await user_repo.get_user_by_tg_id(message.from_user.id)
 
-    await message.message.edit_text(
+    await message.answer(
         f"<b>{message.from_user.full_name}</b>\n\n"
         f"Username - {user.username}\n" if user.username else ""
         f"ID - <code>{user.tg.id}</code>\n"
@@ -35,7 +35,7 @@ async def user_deposit_action(
         "Enter the replenishment amount:",
         reply_markup=profile_kb.cancel_deposit_action()
     )
-    await state.set_state(UserDepositState.IMPUT_AMOUNT)
+    await state.set_state(UserDepositState.INPUT_AMOUNT)
 
 
 @router.callback_query(StateFilter(UserDepositState), F.data == "cancel_deposit")
@@ -55,7 +55,7 @@ async def user_deposit_action_cancel(callback_query: types.CallbackQuery, state:
     )
 
 
-@router.message(UserDepositState.IMPUT_AMOUNT)
+@router.message(UserDepositState.INPUT_AMOUNT)
 async def user_deposit_amount(message: types.Message, state: FSMContext):
     if not message.text.isdigit():
         await message.answer("Enter an integer")
@@ -66,5 +66,5 @@ async def user_deposit_amount(message: types.Message, state: FSMContext):
     await state.set_data({"amount": amount})
     await message.answer(
         f"Do you confirm that the balance has reached {amount} coins",
-        reply_markup=profile_kb.cancel_deposit_action()
+        reply_markup=profile_kb.apply_deposit_action()
     )

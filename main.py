@@ -1,8 +1,8 @@
 import asyncio
 from aiogram import Bot, Dispatcher
 
-from handlers._init_ import register_routes
-from database.models._init_ import BaseModel 
+from handlers import register_routes
+from database.models import BaseModel 
 from middlewares import register_middlewares
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 

@@ -3,15 +3,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database.models.category import Category
 
-class CategoriesRepo:
+class CategoryRepo:
     def __init__(self,session: AsyncSession):
         self.__session = session
 
-        async def get_list(self):
-            statment = select(Category).order_by(Category.name)
-            return await self.__session.scalars(statment)
-        
-        async def get_by_id(self, category_id: int):
-            statment = select(Category).where(Category.id == category_id)
-            return await self.__session.scalars(statment)
+    async def get_list(self):
+        statment = select(Category).order_by(Category.name)
+        return await self.__session.scalars(statment)
+     
+    async def get_by_id(self, category_id: int):
+        statment = select(Category).where(Category.id == category_id)
+        return await self.__session.scalar(statment)
         

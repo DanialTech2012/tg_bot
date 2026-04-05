@@ -5,7 +5,7 @@ def profile_menu():
         [
             InlineKeyboardButton(
                 text="Top up your balance", 
-                callbeck_data="deposit"
+                callback_data="deposit"
             )
         ]
     ])
@@ -16,7 +16,7 @@ def cancel_deposit_action():
         [
             InlineKeyboardButton(
                 text="Cancel", 
-                callbeck_data="cancel_deposit"
+                callback_data="cancel_deposit"
             )
         ]
     ])
@@ -27,11 +27,11 @@ def apply_deposit_action():
         [
             InlineKeyboardButton(
                 text="Yes", 
-                callbeck_data="apply_deposit"
+                callback_data="apply_deposit"
             ),
             InlineKeyboardButton(
                 text="No", 
-                callbeck_data="cancel_deposit"
+                callback_data="cancel_deposit"
             )
         ]
     ])
